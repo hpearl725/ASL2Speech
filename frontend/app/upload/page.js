@@ -14,6 +14,7 @@ export default function UploadPage() {
   const backendURL = "http://localhost:8000";
   const [processedVideoURL, setProcessedVideoURL] = useState(null);
   const [downloadVideoURL, setDownloadVideoURL] = useState(null);
+  const [recognizedText, setRecognizedText] = useState(null);
 
   const handleDragEnter = (e) => {
     e.preventDefault();
@@ -76,12 +77,18 @@ export default function UploadPage() {
 
       const data = response.data;
 
-      setProcessingStatus("Processing your video for captions...");
+      // Show recognized text
+      setProcessingStatus(
+        "Processing your video for sign language recognition..."
+      );
+      setRecognizedText(data.recognized_text); // Add this line
 
-      // Set the processed video URL and download URL using the filename returned from the backend
-      setProcessedVideoURL(`${backendURL}/video/${data.filename}`);
-      setDownloadVideoURL(`${backendURL}/video/${data.filename}`);
+      // Set processed video URL
+      setProcessedVideoURL(`${backendURL}/video/${data.processed_filename}`);
+      setDownloadVideoURL(`${backendURL}/video/${data.processed_filename}`);
+      
 
+      // Show results
       setShowResults(true);
       setProcessingStatus("");
     } catch (err) {
@@ -230,16 +237,21 @@ export default function UploadPage() {
           </div>
         </div>
 
-        {showResults && processedVideoURL && (
+        {showResults && processedVideoURL && recognizedText && (
           <section className="mb-16">
             <h2 className="text-3xl font-bold text-[#1D4ED8] text-center mb-8">
               Your Captioned Video
             </h2>
+            <div className="mt-6 p-4 bg-[#F3F4F6] rounded-lg">
+              <h3 className="font-semibold text-lg mb-2 text-[#1F2937]">
+                Recognized Sign Language Text:
+              </h3>
+              <p className="text-[#4B5563]">{recognizedText}</p>
+            </div>
             <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
               <div className="aspect-w-16 aspect-h-9">
                 <video
                   controls
-                  autoPlay
                   className="w-full h-full object-cover"
                   src={processedVideoURL}
                 />

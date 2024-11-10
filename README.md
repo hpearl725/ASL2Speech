@@ -1,4 +1,13 @@
-# 1. Clone the repository
+# Echo Project Setup Guide
+
+## Prerequisites
+- Node.js and npm
+- Python 3.x
+- Git
+
+## Installation & Setup
+
+### 1. Clone the Repository
 git clone https://github.com/yourusername/echo.git && cd echo
 
 # 2. Install frontend dependencies

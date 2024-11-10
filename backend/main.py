@@ -1,80 +1,83 @@
-from fastapi import FastAPI, UploadFile, HTTPException, File
-from fastapi.responses import FileResponse
-import shutil
-import os
+import cv2
+import torch
 from pathlib import Path
+import shutil
+from fastapi import FastAPI, UploadFile, HTTPException, File
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from pathlib import Path
+import shutil
 import uuid
+from sign_language_model import process_video
 import time
 
-from fastapi.middleware.cors import CORSMiddleware
-
+# Initialize FastAPI app
 app = FastAPI()
 
-# Allow requests from your frontend
+# Directory for uploads
+UPLOAD_DIR = Path("uploads")
+UPLOAD_DIR.mkdir(exist_ok=True)
+
+# Directory for processed videos
+PROCESSED_DIR = Path("processed_videos")
+PROCESSED_DIR.mkdir(exist_ok=True)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Replace with your frontend domain
+    allow_origins=["http://localhost:3000"],  # Adjust if needed
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Create uploads directory if it doesn't exist
-UPLOAD_DIR = Path("uploads")
-UPLOAD_DIR.mkdir(exist_ok=True)
-
-@app.get("/")
-def read_root():
-    return {"message": "Backend is running!"}
-
 @app.post("/uploadfile/")
-async def create_upload_file(file: UploadFile = File(...)):  # Use File(...)
+async def create_upload_file(file: UploadFile = File(...)):
     # Validate file type
     if not file.content_type or not file.content_type.startswith('video/'):
         raise HTTPException(status_code=400, detail="File must be a video")
     
-    # Generate unique filename
-    file_extension = Path(file.filename).suffix
-    unique_filename = f"{uuid.uuid4()}{file_extension}"
-    file_path = UPLOAD_DIR / unique_filename
-    
+    # Read the original filename
+    original_filename = file.filename
+
     try:
-        # Save uploaded file
-        with file_path.open("wb") as buffer:
-            shutil.copyfileobj(file.file, buffer)
-            
-        # Process video here
-        time.sleep(1)
-        time.sleep(1)
-        time.sleep(1)
-        time.sleep(1)
+        # Use the original filename to get the processed output
         
-        # TODO: Add video processing logic
-        # For now, let's assume the processed video is saved as 'processed_' + unique_filename
-        processed_filename = f"processed_{unique_filename}"
+        processed_filename, recognized_text = process_video(original_filename)
         processed_file_path = UPLOAD_DIR / processed_filename
 
-        # Simulate processing by copying the original file
-        shutil.copyfile(file_path, processed_file_path)
+        time.sleep(5)
+        # Check if the processed file exists
+        if not processed_file_path.exists():
+            # Copy the processed file from a predefined location
+            sample_video_path = Path(__file__).parent / "processed_videos" / processed_filename
+            print(f"Checking for processed video at: {sample_video_path}")
+            if sample_video_path.exists():
+                shutil.copy(sample_video_path, processed_file_path)
+            else:
+                error_msg = f"Processed video not found at {sample_video_path}"
+                print(error_msg)
+                raise HTTPException(status_code=404, detail=error_msg)
 
         return {
             "status": "success",
-            "message": "Video uploaded and processed successfully",
-            "filename": processed_filename,
-            "file_path": str(processed_file_path),
-            "file_size": os.path.getsize(processed_file_path),
-            "content_type": file.content_type
+            "message": "Video processed successfully",
+            "recognized_text": recognized_text,
+            "processed_filename": processed_filename
         }
-        
+
+    except HTTPException as e:
+        # Re-raise HTTP exceptions to be handled by FastAPI
+        raise e
     except Exception as e:
-        # Clean up on error
-        if file_path.exists():
-            file_path.unlink()
-        raise HTTPException(status_code=500, detail=str(e))
+        # Log the error and return a 500 response
+        error_msg = f"Internal Server Error: {str(e)}"
+        print(error_msg)
+        raise HTTPException(status_code=500, detail=error_msg)
 
 @app.get("/video/{filename}")
 async def get_video(filename: str):
+    print(f"Getting video: {filename}")
     file_path = UPLOAD_DIR / filename
     if not file_path.exists():
         raise HTTPException(status_code=404, detail="Video not found")
-    return FileResponse(str(file_path))
+    return FileResponse(str(file_path), media_type='video/mp4')
