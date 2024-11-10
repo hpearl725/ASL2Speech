@@ -13,7 +13,7 @@ node_modules/
 coverage/
 
 # frontend (Next.js)
-frontend/.next/
+/frontend/.next/
 out/
 
 # production builds
