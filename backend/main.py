@@ -38,7 +38,7 @@ async def create_upload_file(file: UploadFile = File(...)):
     try:
         # Use the original filename to get the processed output
 
-        time.sleep(5)
+        time.sleep(4.5)
         # Check if the processed file exists
         processed_filename, recognized_text = process_video(original_filename)
         processed_file_path = UPLOAD_DIR / processed_filename
