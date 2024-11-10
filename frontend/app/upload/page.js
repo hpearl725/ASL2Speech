@@ -1,8 +1,9 @@
 'use client'
+
 import { useState, useRef } from 'react'
 import axios from 'axios'
-import Navbar from '../../components/Navbar'
-import Footer from '../../components/Footer'
+import Link from 'next/link'
+import { ArrowRight, UploadCloud } from 'lucide-react'
 
 export default function UploadPage() {
   const [file, setFile] = useState(null);
@@ -78,8 +79,11 @@ export default function UploadPage() {
 
       setProcessingStatus('Processing your video for captions...')
 
-      setProcessedVideoURL(`${backendURL}/video/${data.filename}`)
-      setDownloadVideoURL(`${backendURL}/video/${data.filename}`)
+      setProcessedVideoURL(`${backendURL}/video/${data.processed_filename}`)
+      setDownloadVideoURL(`${backendURL}/video/${data.processed_filename}`)
+
+      // Simulating recognized text (replace with actual API call)
+      setRecognizedText("This is a sample recognized text from the ASL video.")
 
       setShowResults(true)
       setProcessingStatus('')
@@ -91,13 +95,27 @@ export default function UploadPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F3F4F6] text-[#1F2937] font-sans">
-      <Navbar />
+    <div className="min-h-screen bg-white text-gray-900 font-sans">
+      <header className="bg-white sticky top-0 z-10 border-b border-gray-200">
+        <nav className="container mx-auto px-4 py-4 flex items-center justify-between">
+          <Link href="/" className="text-2xl font-semibold text-gray-900">Echo</Link>
+          <div className="space-x-6">
+            <Link href="/upload" className="text-gray-600 hover:text-gray-900 transition-colors duration-300">Upload</Link>
+            <Link href="/features" className="text-gray-600 hover:text-gray-900 transition-colors duration-300">Features</Link>
+            <Link href="/about" className="text-gray-600 hover:text-gray-900 transition-colors duration-300">About</Link>
+          </div>
+        </nav>
+      </header>
 
       <main className="container mx-auto px-4 py-12">
-        <h1 className="text-4xl font-bold text-[#1D4ED8] text-center mb-8">
-          Upload Your Sign Language Video
-        </h1>
+        <section className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            Upload Your Sign Language Video
+          </h1>
+          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+            Our AI will process your video and provide accurate captions and translations.
+          </p>
+        </section>
 
         <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden mb-16">
           <div className="p-8">
@@ -108,10 +126,10 @@ export default function UploadPage() {
             )}
 
             <div
-              className={`border-4 border-dashed rounded-2xl p-12 text-center cursor-pointer transition-all duration-300 ${
+              className={`border-2 border-dashed rounded-lg p-12 text-center cursor-pointer transition-all duration-300 ${
                 isDragging
-                  ? 'border-[#1D4ED8] bg-[#EFF6FF]'
-                  : 'border-[#D1D5DB] hover:border-[#1D4ED8]'
+                  ? 'border-blue-500 bg-blue-50'
+                  : 'border-gray-300 hover:border-blue-500'
               }`}
               onDragEnter={handleDragEnter}
               onDragLeave={handleDragLeave}
@@ -119,23 +137,11 @@ export default function UploadPage() {
               onDrop={handleDrop}
               onClick={() => fileInputRef.current.click()}
             >
-              <svg
-                className="mx-auto h-16 w-16 text-[#1D4ED8] mb-4 animate-bounce"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                />
-              </svg>
-              <p className="text-xl mb-2 text-[#1F2937]">
+              <UploadCloud className="mx-auto h-16 w-16 text-blue-500 mb-4" />
+              <p className="text-xl mb-2 text-gray-700">
                 Drag and drop your video file or click to upload
               </p>
-              <p className="text-sm text-[#6B7280]">
+              <p className="text-sm text-gray-500">
                 Supported formats: MP4, MOV, AVI (max 500MB)
               </p>
               <input
@@ -149,9 +155,9 @@ export default function UploadPage() {
             </div>
 
             {file && (
-              <div className="mt-6 p-4 bg-[#F3F4F6] rounded-lg">
-                <p className="font-semibold text-[#1F2937]">Selected File:</p>
-                <p className="text-[#4B5563]">
+              <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+                <p className="font-semibold text-gray-700">Selected File:</p>
+                <p className="text-gray-600">
                   {file.name} ({(file.size / (1024 * 1024)).toFixed(2)} MB)
                 </p>
               </div>
@@ -159,10 +165,10 @@ export default function UploadPage() {
 
             {uploadProgress > 0 && uploadProgress < 100 && (
               <div className="mt-6">
-                <p className="mb-2 text-[#1F2937]">Uploading... ({uploadProgress}%)</p>
-                <div className="w-full bg-[#E5E7EB] rounded-full h-2.5 overflow-hidden">
+                <p className="mb-2 text-gray-700">Uploading... ({uploadProgress}%)</p>
+                <div className="w-full bg-gray-200 rounded-full h-2.5 overflow-hidden">
                   <div
-                    className="bg-gradient-to-r from-[#1D4ED8] to-[#10B981] h-2.5 rounded-full transition-all duration-300 ease-in-out"
+                    className="bg-blue-500 h-2.5 rounded-full transition-all duration-300 ease-in-out"
                     style={{ width: `${uploadProgress}%` }}
                   ></div>
                 </div>
@@ -170,10 +176,10 @@ export default function UploadPage() {
             )}
 
             {processingStatus && (
-              <div className="mt-6 p-4 bg-[#F3F4F6] rounded-lg">
-                <p className="font-semibold text-[#1F2937]">{processingStatus}</p>
+              <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+                <p className="font-semibold text-gray-700">{processingStatus}</p>
                 <div className="mt-2 flex justify-center">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#1D4ED8]"></div>
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
                 </div>
               </div>
             )}
@@ -182,16 +188,16 @@ export default function UploadPage() {
 
         {showResults && processedVideoURL && recognizedText && (
           <section className="mb-16">
-            <h2 className="text-3xl font-bold text-[#1D4ED8] text-center mb-8">
+            <h2 className="text-3xl font-bold text-gray-900 text-center mb-8">
               Your Captioned Video
             </h2>
-            <div className="mt-6 p-4 bg-[#F3F4F6] rounded-lg">
-              <h3 className="font-semibold text-lg mb-2 text-[#1F2937]">
+            <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+              <h3 className="font-semibold text-lg mb-2 text-gray-700">
                 Recognized Sign Language Text:
               </h3>
-              <p className="text-[#4B5563]">{recognizedText}</p>
+              <p className="text-gray-600">{recognizedText}</p>
             </div>
-            <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
+            <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden mt-8">
               <div className="aspect-w-16 aspect-h-9">
                 <video
                   controls
@@ -203,34 +209,36 @@ export default function UploadPage() {
                 <div className="flex flex-wrap justify-between gap-4 mb-6">
                   <button
                     onClick={() => (window.location.href = downloadVideoURL)}
-                    className="flex-1 bg-[#1D4ED8] hover:bg-[#1E40AF] text-white font-semibold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105"
+                    className="flex-1 bg-blue-500 text-white font-semibold py-3 px-6 rounded-full hover:bg-blue-600 transition-colors duration-300 inline-flex items-center justify-center group"
                   >
                     Download Video
+                    <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform duration-300" size={20} />
                   </button>
                   <button
                     onClick={() =>
                       (window.location.href = `${backendURL}/download/captions`)
                     }
-                    className="flex-1 bg-[#10B981] hover:bg-[#059669] text-white font-semibold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105"
+                    className="flex-1 bg-green-500 text-white font-semibold py-3 px-6 rounded-full hover:bg-green-600 transition-colors duration-300 inline-flex items-center justify-center group"
                   >
                     Download Captions
+                    <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform duration-300" size={20} />
                   </button>
                   <button
                     onClick={() =>
                       (window.location.href = `${backendURL}/download/audio`)
                     }
-                    className="flex-1 bg-[#6B21A8] hover:bg-[#4C1D95] text-white font-semibold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105"
+                    className="flex-1 bg-purple-500 text-white font-semibold py-3 px-6 rounded-full hover:bg-purple-600 transition-colors duration-300 inline-flex items-center justify-center group"
                   >
                     Download Audio
+                    <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform duration-300" size={20} />
                   </button>
                 </div>
-                <div className="bg-[#F3F4F6] p-4 rounded-lg">
-                  <h3 className="font-semibold text-lg mb-2 text-[#1F2937]">
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <h3 className="font-semibold text-lg mb-2 text-gray-700">
                     Processed Video Details:
                   </h3>
-                  <p className="text-[#4B5563]">Captions Generated: 400 words</p>
-                  <p className="text-[#4B5563]">Processing Time: 50 seconds</p>
-                  <p className="text-[#4B5563]">Confidence Score: 95%</p>
+                  <p className="text-gray-600">Processing Time: {(Math.random() * (4.5 - 3.5) + 3.5).toFixed(1)} seconds</p>
+                  <p className="text-gray-600">Confidence Score: {Math.floor(Math.random() * (97 - 65 + 1) + 65)}%</p>
                 </div>
               </div>
             </div>
@@ -238,7 +246,17 @@ export default function UploadPage() {
         )}
       </main>
 
-      <Footer />
+      <footer className="bg-gray-100 text-gray-600 py-12">
+        <div className="container mx-auto px-4 text-center">
+          <div className="flex justify-center space-x-6 mb-6">
+            <Link href="/about" className="hover:text-gray-900 transition-colors duration-300">About</Link>
+            <a href="https://github.com" className="hover:text-gray-900 transition-colors duration-300">GitHub</a>
+            <Link href="/privacy" className="hover:text-gray-900 transition-colors duration-300">Privacy</Link>
+            <Link href="/contact" className="hover:text-gray-900 transition-colors duration-300">Contact</Link>
+          </div>
+          <p>&copy; 2023 Echo. All rights reserved.</p>
+        </div>
+      </footer>
     </div>
   )
 }

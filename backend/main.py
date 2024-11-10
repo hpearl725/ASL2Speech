@@ -18,10 +18,6 @@ app = FastAPI()
 UPLOAD_DIR = Path("uploads")
 UPLOAD_DIR.mkdir(exist_ok=True)
 
-# Directory for processed videos
-PROCESSED_DIR = Path("processed_videos")
-PROCESSED_DIR.mkdir(exist_ok=True)
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000"],  # Adjust if needed
@@ -29,6 +25,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
 
 @app.post("/uploadfile/")
 async def create_upload_file(file: UploadFile = File(...)):
@@ -41,12 +39,12 @@ async def create_upload_file(file: UploadFile = File(...)):
 
     try:
         # Use the original filename to get the processed output
-        
-        processed_filename, recognized_text = process_video(original_filename)
-        processed_file_path = UPLOAD_DIR / processed_filename
 
         time.sleep(5)
         # Check if the processed file exists
+        processed_filename, recognized_text = process_video(original_filename)
+        processed_file_path = UPLOAD_DIR / processed_filename
+        
         if not processed_file_path.exists():
             # Copy the processed file from a predefined location
             sample_video_path = Path(__file__).parent / "processed_videos" / processed_filename
@@ -62,7 +60,7 @@ async def create_upload_file(file: UploadFile = File(...)):
             "status": "success",
             "message": "Video processed successfully",
             "recognized_text": recognized_text,
-            "processed_filename": processed_filename
+            "processed_filename": processed_filename,
         }
 
     except HTTPException as e:
@@ -76,8 +74,11 @@ async def create_upload_file(file: UploadFile = File(...)):
 
 @app.get("/video/{filename}")
 async def get_video(filename: str):
-    print(f"Getting video: {filename}")
     file_path = UPLOAD_DIR / filename
+    print(f"Looking for video file at: {file_path}")
+
     if not file_path.exists():
+        print(f"File not found: {file_path}")
         raise HTTPException(status_code=404, detail="Video not found")
+
     return FileResponse(str(file_path), media_type='video/mp4')

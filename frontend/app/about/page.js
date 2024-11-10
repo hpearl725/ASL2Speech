@@ -23,10 +23,10 @@ export default function AboutPage() {
               <div className="w-48 h-48 bg-gray-300 rounded-full mb-6">
                 {/* Placeholder for image */}
               </div>
-              <h3 className="text-2xl font-semibold mb-2">Founder Name 1</h3>
+              <h3 className="text-2xl font-semibold mb-2">Byren</h3>
               <p className="text-[#4B5563] text-center max-w-md">
-                [Insert a compelling biography about Founder 1 here, highlighting their background,
-                passions, and contributions to Echo.]
+                A passionate software engineer with expertise in machine learning and computer vision. 
+                Byren leads the technical development of Echo's AI models and ensures robust system architecture.
               </p>
             </div>
             {/* Founder 2 */}
@@ -34,10 +34,10 @@ export default function AboutPage() {
               <div className="w-48 h-48 bg-gray-300 rounded-full mb-6">
                 {/* Placeholder for image */}
               </div>
-              <h3 className="text-2xl font-semibold mb-2">Founder Name 2</h3>
+              <h3 className="text-2xl font-semibold mb-2">Ethan</h3>
               <p className="text-[#4B5563] text-center max-w-md">
-                [Insert a compelling biography about Founder 2 here, highlighting their background,
-                passions, and contributions to Echo.]
+                With a background in accessibility technology and user experience design, Ethan drives 
+                Echo's mission to create intuitive and inclusive solutions for sign language users.
               </p>
             </div>
             {/* Founder 3 */}
@@ -45,10 +45,10 @@ export default function AboutPage() {
               <div className="w-48 h-48 bg-gray-300 rounded-full mb-6">
                 {/* Placeholder for image */}
               </div>
-              <h3 className="text-2xl font-semibold mb-2">Founder Name 3</h3>
+              <h3 className="text-2xl font-semibold mb-2">Harrison</h3>
               <p className="text-[#4B5563] text-center max-w-md">
-                [Insert a compelling biography about Founder 3 here, highlighting their background,
-                passions, and contributions to Echo.]
+                A skilled full-stack developer with a focus on scalable web applications. Harrison 
+                ensures Echo's platform remains performant and reliable while leading frontend development.
               </p>
             </div>
             {/* Founder 4 */}
@@ -56,10 +56,10 @@ export default function AboutPage() {
               <div className="w-48 h-48 bg-gray-300 rounded-full mb-6">
                 {/* Placeholder for image */}
               </div>
-              <h3 className="text-2xl font-semibold mb-2">Founder Name 4</h3>
+              <h3 className="text-2xl font-semibold mb-2">Berit</h3>
               <p className="text-[#4B5563] text-center max-w-md">
-                [Insert a compelling biography about Founder 4 here, highlighting their background,
-                passions, and contributions to Echo.]
+                With deep expertise in natural language processing and AI, Berit leads research and 
+                development initiatives to improve Echo's sign language recognition capabilities.
               </p>
             </div>
           </div>
@@ -68,18 +68,23 @@ export default function AboutPage() {
         <section className="mb-16">
           <h2 className="text-3xl font-bold text-[#1D4ED8] text-center mb-8">Our Story</h2>
           <p className="text-xl text-[#4B5563] leading-relaxed max-w-3xl mx-auto">
-            [Insert a detailed and engaging narrative about the inception of Echo, the challenges
-            faced, and the journey towards developing this innovative platform. Discuss the team's
-            vision, values, and commitment to making a positive impact.]
+            Echo began as a passionate project among four university students who recognized the need 
+            for better accessibility tools in sign language communication. What started as a research 
+            project has grown into a comprehensive platform that combines cutting-edge AI technology 
+            with practical accessibility solutions. Our journey has been marked by continuous learning, 
+            collaboration with the deaf community, and a commitment to creating technology that makes 
+            a real difference in people's lives.
           </p>
         </section>
 
         <section className="mb-16">
           <h2 className="text-3xl font-bold text-[#1D4ED8] text-center mb-8">Our Mission</h2>
           <p className="text-xl text-[#4B5563] leading-relaxed max-w-3xl mx-auto">
-            [Elaborate on Echo's mission to improve accessibility, promote inclusivity, and leverage
-            technology for social good. Explain how the platform aims to transform communication for
-            sign language users and the broader community.]
+            Echo's mission is to revolutionize sign language communication through innovative AI 
+            technology. We strive to create a world where language barriers dissolve, and everyone 
+            has equal access to communication tools. By combining advanced machine learning with 
+            user-friendly design, we're working to make sign language translation accessible, 
+            accurate, and instantaneous for all users.
           </p>
         </section>
       </main>
