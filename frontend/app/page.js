@@ -1,19 +1,12 @@
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
+import Navbar from '../components/Navbar'
+import Footer from '../components/Footer'
 
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-white text-gray-900 font-sans">
-      <header className="bg-white sticky top-0 z-10 border-b border-gray-200">
-        <nav className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="text-2xl font-semibold text-gray-900">Echo</Link>
-          <div className="space-x-6">
-            <Link href="/upload" className="text-gray-600 hover:text-gray-900 transition-colors duration-300">Upload</Link>
-            <Link href="/features" className="text-gray-600 hover:text-gray-900 transition-colors duration-300">Features</Link>
-            <Link href="/about" className="text-gray-600 hover:text-gray-900 transition-colors duration-300">About</Link>
-          </div>
-        </nav>
-      </header>
+      <Navbar />
 
       <main className="container mx-auto px-4 py-12">
         <section className="text-center mb-20">
@@ -88,17 +81,7 @@ export default function HomePage() {
         </section>
       </main>
 
-      <footer className="bg-gray-100 text-gray-600 py-12">
-        <div className="container mx-auto px-4 text-center">
-          <div className="flex justify-center space-x-6 mb-6">
-            <Link href="/about" className="hover:text-gray-900 transition-colors duration-300">About</Link>
-            <a href="https://github.com" className="hover:text-gray-900 transition-colors duration-300">GitHub</a>
-            <Link href="/privacy" className="hover:text-gray-900 transition-colors duration-300">Privacy</Link>
-            <Link href="/contact" className="hover:text-gray-900 transition-colors duration-300">Contact</Link>
-          </div>
-          <p>&copy; 2023 Echo. All rights reserved.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }
