@@ -22,6 +22,7 @@ export default function AboutPage() {
             <div className="flex flex-col items-center">
               <div className="w-48 h-48 bg-gray-300 rounded-full mb-6">
                 {/* Placeholder for image */}
+                <img src="/images/Byren.jpeg" alt="Byren" className="w-full h-full rounded-full object-cover" />
               </div>
               <h3 className="text-2xl font-semibold mb-2">Byren</h3>
               <p className="text-[#4B5563] text-center max-w-md">
@@ -31,19 +32,22 @@ export default function AboutPage() {
             </div>
             {/* Founder 2 */}
             <div className="flex flex-col items-center">
-              <div className="w-48 h-48 bg-gray-300 rounded-full mb-6">
-                {/* Placeholder for image */}
-              </div>
-              <h3 className="text-2xl font-semibold mb-2">Ethan</h3>
-              <p className="text-[#4B5563] text-center max-w-md">
-                With a background in accessibility technology and user experience design, Ethan drives 
-                Echo's mission to create intuitive and inclusive solutions for sign language users.
-              </p>
+            <div className="w-48 h-48 bg-gray-300 rounded-full mb-6">
+                {/* Image for Ethan */}
+                <img src="/images/ethan.jpeg" alt="Ethan" className="w-full h-full rounded-full object-cover" />
+            </div>
+            <h3 className="text-2xl font-semibold mb-2">Ethan</h3>
+            <p className="text-[#4B5563] text-center max-w-md">
+            With a strong background in user experience, cybersecurity, CV, and ML,
+            Ethan leverages his expertise to pioneer advanced, 
+            accessible solutions for sign language users.
+            </p>
             </div>
             {/* Founder 3 */}
             <div className="flex flex-col items-center">
               <div className="w-48 h-48 bg-gray-300 rounded-full mb-6">
                 {/* Placeholder for image */}
+                <img src="/images/harrison.jpeg" alt="harrison" className="w-full h-full rounded-full object-cover" />
               </div>
               <h3 className="text-2xl font-semibold mb-2">Harrison</h3>
               <p className="text-[#4B5563] text-center max-w-md">
@@ -55,6 +59,7 @@ export default function AboutPage() {
             <div className="flex flex-col items-center">
               <div className="w-48 h-48 bg-gray-300 rounded-full mb-6">
                 {/* Placeholder for image */}
+                <img src="/images/Berit.jpeg" alt="Berit" className="w-full h-full rounded-full object-cover" />
               </div>
               <h3 className="text-2xl font-semibold mb-2">Berit</h3>
               <p className="text-[#4B5563] text-center max-w-md">
@@ -88,7 +93,7 @@ export default function AboutPage() {
           </p>
         </section>
       </main>
-      
+
       <Footer />
     </div>
   )
