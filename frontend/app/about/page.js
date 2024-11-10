@@ -51,8 +51,8 @@ export default function AboutPage() {
               </div>
               <h3 className="text-2xl font-semibold mb-2">Harrison</h3>
               <p className="text-[#4B5563] text-center max-w-md">
-                A skilled full-stack developer with a focus on scalable web applications. Harrison 
-                ensures Echo's platform remains performant and reliable while leading frontend development.
+                A skilled Machine Learning Engineer with a background in Robotics, Physics Simulations, and Data Visualization. Harrison 
+                ensures Echo's machine learning models remains performant and reliable while overseeing model development.
               </p>
             </div>
             {/* Founder 4 */}
