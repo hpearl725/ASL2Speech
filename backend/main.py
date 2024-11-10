@@ -26,8 +26,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
-
 @app.post("/uploadfile/")
 async def create_upload_file(file: UploadFile = File(...)):
     # Validate file type

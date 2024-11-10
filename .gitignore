@@ -41,7 +41,6 @@ next-env.d.ts
 
 # backend (Python)
 /backend/venv
-/backend/uploads/
 __pycache__/
 *.pyc
 *.pyo
